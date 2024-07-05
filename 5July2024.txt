@@ -1,0 +1,63 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int[] nodesBetweenCriticalPoints(ListNode head) {
+        int r[]=new int[2];
+        /*if(head.next.next==null){
+            r[0]=-1;
+            r[1]=-1;
+            return r;
+        }*/
+        ListNode c=head.next;
+        ListNode p=head;
+        ListNode f=c.next;
+        int s=2,pc=0,cc=0,md=0,ld=0;
+        while(f!=null){
+            
+            if(p.val<c.val&&c.val>f.val||p.val>c.val&&c.val<f.val){
+                //System.out.println(s);
+                cc=s;
+                if(pc==0){
+                    pc=cc;
+                    //System.out.println(s+" pc");
+
+                }
+                else{
+                    ld+=cc-pc;
+                    //System.out.println(ld+" ld");
+                    if(md==0){
+                        md=cc-pc;
+                       // System.out.println(s+" md");
+                    }
+                    else if(md!=0&&md>cc-pc){
+                        md=cc-pc;
+                        //System.out.println(s+" md>");
+                    }
+                }
+                pc=cc;
+               // System.out.println(s+" s "+pc+" pc "+cc+" cc "+ld+" ld "+md+" md");
+            }
+            f=f.next;
+            c=c.next;
+            p=p.next;
+            s++;
+        }
+        if(md==0&&ld==0){
+             r[0]=-1;
+            r[1]=-1;
+            return r;
+        }
+        r[0]=md;
+        r[1]=ld;
+        return r;
+        
+    }
+}
